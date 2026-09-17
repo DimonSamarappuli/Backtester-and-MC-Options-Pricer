@@ -43,4 +43,56 @@ A smaller fixed percentage applied on every position change. This models the fac
 
 Both costs are gated by a deductibles flag which was made by diffing shifted signal .
 
-### 3.6 Position Size
+### 4. Performance Metrics
+Six metrics were computed for both the strategy and the buy-and-hold benchmark.
+- CAGR: compound annual growth rate. Computed from the final cumulative return and the number of days the data span, (final_value^(1/years) - 1), not through simple division which would have ignored compounding,
+- Annualized Volatility: standard deviation of daily return * 252
+- Sharpe Ratio: annualized return divided by annualized volatility. Sharpe ratio takes into account risk.
+- Max Drawdown: the largest subsequent peak to trough decline, computed using a running maximum cummax() compared against the value of the stock at each point in time, then taking the most negative point. This is different from finding the highest peak and lowest trough and calculating the decline, as they might not necessarily be next to each other, and hence not subsequent.
+- Win Rate: the proportion of holding days with a positive return
+- Trade count: the number of position changes, not the number of round trips
+
+***image***
+
+### 5. Avoiding Overfitting
+Overfitting is a principle where too many parameters are used to force a model to fit a distinct set of points perfectly, which may exist due to noise, which causes the model to be very accurate at these exact points but inaccurate everywhere else, leading to false signals.
+
+To prevent overfitting and the model learning noise, the data was split into 2 sections, a training set and a testing set. 
+A small, deliberately picked set of SMA window pairs were tested on the training window and the Sharpe Ratio of each were used to pick a winning combination. Sharpe Ratio was preferred for this over CAGR due to Sharpe factoring in risk.
+
+This process was conducted as a defence against curve fitting as parameters that look great on one dataset could simply be capturing noise specific to that dataset. 
+
+### 6. Validating and Checking against backtesting.py
+The validation process of the strategy was unexpectedly the largest learning resource of this entire project, due to the discrepancies between models that were introduced and investigated.
+
+To check, an identical strategy was implemented independently in backtesting.py, a Python library built specifically for backtesting. The goal was to see whether two independently built implementations can agree with each other, which would be a strong sign that there were no bugs or errors.
+
+During the cross-check, a few discrepancies were introduced and investigated:
+
+#### Early Trade count mismatch: 
+An earlier implementation of the model showed a trade count mismatch. This was caused due to having a short lookback buffer, the long SMA did not have a long enough warm up period, so when about 200 days of NaN transitioned to a real number, .diff() read this as a crossover, creating fake jumps. This was fixed by trimming the dataframe to start only once the long SMA had real values throughout.
+first_valid_idx = df["Long_SMA"].first_valid_index()
+df = df.loc[first_valid_idx:]
+
+#### Trade Count mismatch due to convention
+After the previously mentioned fix, the pandas version still counted more trades (5) than the backtesting.py version (2). This was resolved by confirming that this was simply a difference in counting convention, where the pandas version counts each position change as a trade whereas the backtesting.py version counts every round trip, so an open position at the end of the data with no matching end date would not be counted.
+
+#### Return Mismatch
+When comparing trade level return between the two versions, one trade showed that the backtesting.py version had double the return of the pandas version. This was caused by the pandas version only using a 0.5 position size, which was then fixed by changing it to 1, which caused the returns to match very closely.
+
+#### Commission Mismatch
+A discrepancy similar to the previous one was resolved by realising that the pandas version was only executing a commission fee during one of the events, either buy or sell, rather than during both. Once both fees were summed up, it matched the fee of the backtesting.py version.
+
+#### Gap in Annualized Volatility, Sharpe Ratio and CAGR
+Even after all the above mentioned fixes, the annualized volatility of the two models did not agree by an order of almost 1.6x. Investigating this discrepancy further led to the fact that this is an acknowledged and debated ambiguity in the method that backtesting.py uses to calculate annualized volatility, as it could be computed from two correct, but different, mathematical conventions, normal and lognormal. The residual gap is hence treated as an explained, expected difference rather than a bug, as every trade and cost level comparison underneath it was verified to match.
+
+#### Conclusion
+Almost none of the initial mismatches were caused due to genuine bugs, but rather mismatches in comparisons, such as date windows, positions and counting conventions. Once each comparison was normalised, the two models agreed with each other at the trade level, which is sufficient evidence to say that the pandas version is sound.
+
+### 7. Accepted Limitations
+- The strategy will only ever hold or exit
+- Fee/slippage values are rough assumptions, not calibrated against a specific real broker's actual fee schedule.
+- Annualized Volatility and hence Sharpe/CAGR, show a residual gap against backtesting.py's figures. This can be attributed to the normal vs lognormal return convention, which is a known point of disagreement in the field.
+
+### Project Demonstrations
+Regardless of how the strategy performed against a simple buy-and-hold strategy, the process of building, testing and validating the model from the ground up and going hands-on into essentially every backtesting statistical pitfall was the true learning point of this project, from look ahead bias and how it is caused, the dangers of overfitting and the train/test splits used to guard against it to the value of independent cross validation between versions to catch errors that may initially appear as bugs. The debugging process of tracing each number to its root cause and figuring out the issue rather than accepting a plausible looking result, was in a lot of ways, the actual substance of this project.
