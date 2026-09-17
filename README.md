@@ -27,3 +27,20 @@ Two SMAs are computed with the pandas .rolling(window=).mean() function function
 
 ### 3.3 Avoiding Look Ahead Bias
 The signal for day N can only be known after day N has ended, due to needing day N's close price, Hence, it can only be acted upon on day N+1, which is a principle raw backtesters ignore. To prevent the backtester from essentially being able to "see the future" by one day , every day, and return an inflated performance, the raw signal was shifted one by using .shift(1).
+
+### 3.4 Returns
+Daily returns of the stock were computed using .pct_change(). The returns of the strategy itself was computed as shifed_signal * daily_return. The shifted signal in this case acts as an on/off signal, when holding, the return is made, but when flat, the signal is 0 so nothing is made regardless of how the market did.
+
+Cumulative returns are computed via a (1 + daily_return).cumprod(), rather than by summing, as return compound multiplicatively rather than additively.
+
+### 3.5 Costs
+Two separate types of costs were taken into consideration, fee per trade (essentially a commission fee) and slippages.
+#### Fee per Trade
+A fixed percentage cost that is applied on every day that a position changes. in both directions.
+
+#### Slippages
+A smaller fixed percentage applied on every position change. This models the fact that the assumed price at execution and the true price will always differ.
+
+Both costs are gated by a deductibles flag which was made by diffing shifted signal .
+
+### 3.6 Position Size
