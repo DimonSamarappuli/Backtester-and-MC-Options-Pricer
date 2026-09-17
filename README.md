@@ -94,5 +94,5 @@ Almost none of the initial mismatches were caused due to genuine bugs, but rathe
 - Fee/slippage values are rough assumptions, not calibrated against a specific real broker's actual fee schedule.
 - Annualized Volatility and hence Sharpe/CAGR, show a residual gap against backtesting.py's figures. This can be attributed to the normal vs lognormal return convention, which is a known point of disagreement in the field.
 
-### Project Demonstrations
+### 8. Project Demonstrations
 Regardless of how the strategy performed against a simple buy-and-hold strategy, the process of building, testing and validating the model from the ground up and going hands-on into essentially every backtesting statistical pitfall was the true learning point of this project, from look ahead bias and how it is caused, the dangers of overfitting and the train/test splits used to guard against it to the value of independent cross validation between versions to catch errors that may initially appear as bugs. The debugging process of tracing each number to its root cause and figuring out the issue rather than accepting a plausible looking result, was in a lot of ways, the actual substance of this project.
