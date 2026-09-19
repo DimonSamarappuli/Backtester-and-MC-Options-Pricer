@@ -12,6 +12,11 @@ Core Strategy: SMA Crossover
 
 Tools: Python, Pandas, backtesting.py, matplotlib
 
+Portfolio:
+
+<img width="275" height="95" alt="portfolio" src="https://github.com/user-attachments/assets/36b33c53-3f39-4296-8ce6-29c69401680a" />
+
+
 ## 2. Core Theory of Strategy
 A moving average crossover is a trend following strategy: when a short window moving average rises above a long window moving average, it's read as the start of an uptrend ("golden cross"). When the opposite happens, it is read as a downtrend ("death cross").
 
@@ -52,7 +57,10 @@ Six metrics were computed for both the strategy and the buy-and-hold benchmark.
 - Win Rate: the proportion of holding days with a positive return
 - Trade count: the number of position changes, not the number of round trips
 
-***image***
+Performance Metrics for tested short and long window pairs:
+
+<img width="422" height="158" alt="test period performance metrics for chosen pair" src="https://github.com/user-attachments/assets/c8dc4b33-f548-497d-bf75-3909266497fd" />
+
 
 ### 5. Avoiding Overfitting
 Overfitting is a principle where too many parameters are used to force a model to fit a distinct set of points perfectly, which may exist due to noise, which causes the model to be very accurate at these exact points but inaccurate everywhere else, leading to false signals.
@@ -62,10 +70,30 @@ A small, deliberately picked set of SMA window pairs were tested on the training
 
 This process was conducted as a defence against curve fitting as parameters that look great on one dataset could simply be capturing noise specific to that dataset. 
 
+Training period performance metrics for tested short and long window pairs:
+
+<img width="467" height="173" alt="training period performance metrics for each window pair" src="https://github.com/user-attachments/assets/a0dc6879-2c20-4934-a554-9db8096635aa" />
+
+Test period performance metrics for chosen pair, short window = 50, long window = 200:
+
+<img width="422" height="158" alt="test period performance metrics for chosen pair" src="https://github.com/user-attachments/assets/f08c8483-db82-45c0-b7e1-bee9221d5630" />
+
 ### 6. Validating and Checking against backtesting.py
 The validation process of the strategy was unexpectedly the largest learning resource of this entire project, due to the discrepancies between models that were introduced and investigated.
 
 To check, an identical strategy was implemented independently in backtesting.py, a Python library built specifically for backtesting. The goal was to see whether two independently built implementations can agree with each other, which would be a strong sign that there were no bugs or errors.
+
+**Pandas backtester vs backtesting.py backtester's performance metrics on test period:**
+
+key: top = pandas version, bottom = backtesting.py version
+
+<img width="419" height="472" alt="mine vs backtesting py&#39;s metrics on the test period" src="https://github.com/user-attachments/assets/269a29a7-bbcd-4b65-a249-75204f4bb191" />
+
+**Pandas backtester vs backtesting.py backtester's performance curves on test period:**
+
+key: left = backtesting.py version, right = pandas version
+
+<img width="1088" height="555" alt="mine vs backtesting py&#39;s curves on the test period" src="https://github.com/user-attachments/assets/8b99c7fc-6ebf-4c71-ab10-4ab366aa62ab" />
 
 During the cross-check, a few discrepancies were introduced and investigated:
 
@@ -95,4 +123,8 @@ Almost none of the initial mismatches were caused due to genuine bugs, but rathe
 - Annualized Volatility and hence Sharpe/CAGR, show a residual gap against backtesting.py's figures. This can be attributed to the normal vs lognormal return convention, which is a known point of disagreement in the field.
 
 ### 8. Project Demonstrations
+Complete period plot of strategy vs buy-and-hold:
+
+<img width="950" height="546" alt="completer period performance plot of chosen pair against buy and hold" src="https://github.com/user-attachments/assets/fae6ae88-0ec0-4289-a5e7-379569302f9b" />
+
 Regardless of how the strategy performed against a simple buy-and-hold strategy, the process of building, testing and validating the model from the ground up and going hands-on into essentially every backtesting statistical pitfall was the true learning point of this project, from look ahead bias and how it is caused, the dangers of overfitting and the train/test splits used to guard against it to the value of independent cross validation between versions to catch errors that may initially appear as bugs. The debugging process of tracing each number to its root cause and figuring out the issue rather than accepting a plausible looking result, was in a lot of ways, the actual substance of this project.
