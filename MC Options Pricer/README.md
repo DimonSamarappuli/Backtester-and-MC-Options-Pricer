@@ -30,7 +30,7 @@ This pricer was built bottom up, which includes learning the stochastic processe
 
 ## Results
 
-| Input | Value |
+| Parameter | Value |
 | --- | --- |
 | Spot price, S_0 | 100 |
 | Strike price, K | 100 |
@@ -38,4 +38,10 @@ This pricer was built bottom up, which includes learning the stochastic processe
 | Volatility, σ | 0.2 |
 | Maturity T (years) | 1 |
 | Simulations, N | 1 000 000 |
+
+| Method | Call price | Standard Error | 95% Confidence Interval |
+| --- | --- | --- | --- |
+| Black-Scholes |  |  |  |
+| Monte-Carlo (without antithetic variates) |  |  |  |
+| Monte-Carlo (with antithetic variates) |  |  |  |
 
