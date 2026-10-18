@@ -102,7 +102,7 @@ The change in X is additive and normally distributed, so X can become negative, 
 
 <img width="776" height="460" alt="image" src="https://github.com/user-attachments/assets/a260c3da-634e-4dc0-9436-59f8445791ed" />
 
-<img width="629" height="524" alt="image" src="https://github.com/user-attachments/assets/84460f10-7e66-48b6-9178-de1d14d1c09f" />
+<img width="476" height="515" alt="image" src="https://github.com/user-attachments/assets/253aea1b-5cf3-43d2-a4b0-eaa46af8f656" />
 
 
 
