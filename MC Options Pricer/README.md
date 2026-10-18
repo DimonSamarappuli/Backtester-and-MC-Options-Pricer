@@ -46,9 +46,7 @@ This pricer was built bottom up, which includes learning the stochastic processe
 | Monte-Carlo (with antithetic variates) | $12.1081 | 0.0071 | [$12.0941, $12.1220] |
 
 
-
 <img width="1127" height="673" alt="image" src="https://github.com/user-attachments/assets/d1b5519c-dd40-4942-b290-261f1ac394e8" />
-
 
 
 | Method | Put price | Standard Error | 95% Confidence Interval |
@@ -56,7 +54,6 @@ This pricer was built bottom up, which includes learning the stochastic processe
 | Black-Scholes | $4.42 | n/a | n/a |
 | Monte-Carlo (without antithetic variates) | $4.4159 | 0.0077 | [$4.4090, $4.4263] |
 | Monte-Carlo (with antithetic variates) | $4.4177 | 0.0077 | [$4.4009, $4.4309] |
-
 
 
 <img width="1127" height="674" alt="image" src="https://github.com/user-attachments/assets/f8ab53b2-b6ae-4494-bfe7-d6640b084f77" />
@@ -68,3 +65,10 @@ Panels, left to right:
 (3) running Monte Carlo call/put price estimate with its 95% confidence band converging on the Black-Scholes price (dashed red line), without antithetic variates; 
 (4) the same convergence plot with antithetic variates. In both convergence panels the
 band narrows as N grows, consistent with the 1/√N rate, and in panel 4 the band is visibly narrower at small, N.
+
+## Mathematical Background
+This section summarises the theory the project is built on.
+
+1. Random Walks
+
+A simple random walk is a sum of independent steps. Its variance grows linearly with the number of steps. As time is sped up by a factor of n, the walk rescales and converges to a continuous random process, Brownian motion. The scaling limit is why variance growing in proportion to time, and standard deviation growing like √T, is the foundational feature of everything to follow.
