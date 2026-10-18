@@ -94,6 +94,11 @@ The change in X is additive and normally distributed, so X can become negative, 
 
 <img width="738" height="518" alt="image" src="https://github.com/user-attachments/assets/a19c1407-cde0-4582-80a8-f921224e855a" />
 
+<img width="742" height="524" alt="image" src="https://github.com/user-attachments/assets/fafb4b07-57fb-4f6b-ad9a-7301a6183b3d" />
+
+<img width="873" height="529" alt="image" src="https://github.com/user-attachments/assets/187dc289-5e5a-4df8-bf1d-7f94e4002d4c" />
+
+<img width="657" height="526" alt="image" src="https://github.com/user-attachments/assets/205b29d8-3839-4c5e-8fb9-0e25a3ea9071" />
 
 
 
