@@ -45,3 +45,13 @@ This pricer was built bottom up, which includes learning the stochastic processe
 | Monte-Carlo (without antithetic variates) | 12.1081 | 0.0156 | [12.0775, 12.1386] |
 | Monte-Carlo (with antithetic variates) | 12.1081 | 0.0071 | [12.0941, 12.1220] |
 
+<img width="1127" height="673" alt="image" src="https://github.com/user-attachments/assets/d1b5519c-dd40-4942-b290-261f1ac394e8" />
+
+| Method | Put price | Standard Error | 95% Confidence Interval |
+| --- | --- | --- | --- |
+| Black-Scholes | $4.42 | n/a | n/a |
+| Monte-Carlo (without antithetic variates) | 4.4159 | 0.0077 | [4.4090, 4.4263] |
+| Monte-Carlo (with antithetic variates) | 4.4177 | 0.0077 | [4.4009, 4.4309] |
+
+<img width="1127" height="674" alt="image" src="https://github.com/user-attachments/assets/f8ab53b2-b6ae-4494-bfe7-d6640b084f77" />
+
