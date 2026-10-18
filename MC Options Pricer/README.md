@@ -72,3 +72,29 @@ This section summarises the theory the project is built on.
 1. Random Walks
 
 A simple random walk is a sum of independent steps. Its variance grows linearly with the number of steps. As time is sped up by a factor of n, the walk rescales and converges to a continuous random process, Brownian motion. The scaling limit is why variance growing in proportion to time, and standard deviation growing like √T, is the foundational feature of everything to follow.
+<img width="928" height="323" alt="image" src="https://github.com/user-attachments/assets/976d3af0-24fb-4d38-a699-fcf30940e2c6" />
+
+2. Brownian Motion (the Wiener process)
+
+<img width="874" height="524" alt="image" src="https://github.com/user-attachments/assets/c1e417e0-a472-4912-a6ca-20dd0b48004c" />
+
+3. Arithmetic Brownian Motion (ABM)
+
+<img width="539" height="474" alt="image" src="https://github.com/user-attachments/assets/76eadb60-82ca-4ade-988b-1b3d8060da47" />
+
+<img width="597" height="512" alt="image" src="https://github.com/user-attachments/assets/3575b111-a323-4394-85bf-f8e6e41056fa" />
+
+The change in X is additive and normally distributed, so X can become negative, which makes it a poor model for stock pricing, which is the motivation for GBM.
+
+<img width="487" height="190" alt="image" src="https://github.com/user-attachments/assets/5a4e4184-d718-425a-adf7-b5ca7e8387ec" />
+
+4. Geometric Brownian Motion (GBM)
+
+<img width="1054" height="398" alt="image" src="https://github.com/user-attachments/assets/312757df-c2f2-42e3-bf0b-f3c235751b41" />
+
+<img width="738" height="518" alt="image" src="https://github.com/user-attachments/assets/a19c1407-cde0-4582-80a8-f921224e855a" />
+
+
+
+
+
