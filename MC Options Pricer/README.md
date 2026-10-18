@@ -42,8 +42,8 @@ This pricer was built bottom up, which includes learning the stochastic processe
 | Method | Call price | Standard Error | 95% Confidence Interval |
 | --- | --- | --- | --- |
 | Black-Scholes | $12.11 | n/a | n/a |
-| Monte-Carlo (without antithetic variates) | 12.1081 | 0.0156 | [12.0775, 12.1386] |
-| Monte-Carlo (with antithetic variates) | 12.1081 | 0.0071 | [12.0941, 12.1220] |
+| Monte-Carlo (without antithetic variates) | $12.1081 | 0.0156 | [$12.0775, $12.1386] |
+| Monte-Carlo (with antithetic variates) | $12.1081 | 0.0071 | [$12.0941, $12.1220] |
 
 
 
@@ -54,8 +54,8 @@ This pricer was built bottom up, which includes learning the stochastic processe
 | Method | Put price | Standard Error | 95% Confidence Interval |
 | --- | --- | --- | --- |
 | Black-Scholes | $4.42 | n/a | n/a |
-| Monte-Carlo (without antithetic variates) | 4.4159 | 0.0077 | [4.4090, 4.4263] |
-| Monte-Carlo (with antithetic variates) | 4.4177 | 0.0077 | [4.4009, 4.4309] |
+| Monte-Carlo (without antithetic variates) | $4.4159 | 0.0077 | [$4.4090, $4.4263] |
+| Monte-Carlo (with antithetic variates) | $4.4177 | 0.0077 | [$4.4009, $4.4309] |
 
 
 
