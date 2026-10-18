@@ -62,4 +62,9 @@ This pricer was built bottom up, which includes learning the stochastic processe
 <img width="1127" height="674" alt="image" src="https://github.com/user-attachments/assets/f8ab53b2-b6ae-4494-bfe7-d6640b084f77" />
 
 
-
+Panels, left to right: 
+(1) simulated GBM price paths against the strike K; 
+(2) histogram of simulated terminal prices, right-skewed and strictly positive as a lognormal should be; 
+(3) running Monte Carlo call/put price estimate with its 95% confidence band converging on the Black-Scholes price (dashed red line), without antithetic variates; 
+(4) the same convergence plot with antithetic variates. In both convergence panels the
+band narrows as N grows, consistent with the 1/√N rate, and in panel 4 the band is visibly narrower at small, N.
