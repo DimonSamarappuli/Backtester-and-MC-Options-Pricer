@@ -98,8 +98,11 @@ The change in X is additive and normally distributed, so X can become negative, 
 
 <img width="873" height="529" alt="image" src="https://github.com/user-attachments/assets/187dc289-5e5a-4df8-bf1d-7f94e4002d4c" />
 
-<img width="657" height="526" alt="image" src="https://github.com/user-attachments/assets/205b29d8-3839-4c5e-8fb9-0e25a3ea9071" />
+<img width="655" height="498" alt="image" src="https://github.com/user-attachments/assets/76b173bd-2983-4fae-b440-a3fe49035d70" />
 
+<img width="776" height="460" alt="image" src="https://github.com/user-attachments/assets/a260c3da-634e-4dc0-9436-59f8445791ed" />
+
+<img width="629" height="524" alt="image" src="https://github.com/user-attachments/assets/84460f10-7e66-48b6-9178-de1d14d1c09f" />
 
 
 
