@@ -90,6 +90,7 @@ The change in X is additive and normally distributed, so X can become negative, 
 
 4. Geometric Brownian Motion (GBM)
 
+GBM makes the percentage change in price random rather than the absolute change.
 <img width="1054" height="398" alt="image" src="https://github.com/user-attachments/assets/312757df-c2f2-42e3-bf0b-f3c235751b41" />
 
 <img width="738" height="518" alt="image" src="https://github.com/user-attachments/assets/a19c1407-cde0-4582-80a8-f921224e855a" />
@@ -101,8 +102,24 @@ The change in X is additive and normally distributed, so X can become negative, 
 <img width="655" height="498" alt="image" src="https://github.com/user-attachments/assets/76b173bd-2983-4fae-b440-a3fe49035d70" />
 
 <img width="776" height="460" alt="image" src="https://github.com/user-attachments/assets/a260c3da-634e-4dc0-9436-59f8445791ed" />
+The key properties of a GBM model is:
+1) S_T is lognormal, it is always positive and skewed to the right.
+2) The mean of a GBM model is given by: E[ST] = S₀eμT.
+3) Due to the solution being closed-form, a price can be sampled in one step from S_0 to S_T. Time stepping schemes such as Euler-Maruyama are only needed for SDE's without a closed-form.
 
 <img width="476" height="515" alt="image" src="https://github.com/user-attachments/assets/253aea1b-5cf3-43d2-a4b0-eaa46af8f656" />
+
+5. Risk-neutral options pricing
+The price of a derivative is not the discounted real-world expected payoff. The actual price is given by:
+<img width="157" height="33" alt="image" src="https://github.com/user-attachments/assets/8a24ffa6-772d-4536-9f95-ba87e4253c9d" />
+where under the risk neutral measure Q, the stock drifts at the risk free rate r rather than at μ.
+
+<img width="811" height="215" alt="image" src="https://github.com/user-attachments/assets/77697adf-e27e-4073-8a7a-a15bbb3c7dff" />
+
+<img width="823" height="496" alt="image" src="https://github.com/user-attachments/assets/c05cac74-dd70-41c4-a351-5360e4a16696" />
+
+<img width="839" height="506" alt="image" src="https://github.com/user-attachments/assets/1d33ebe7-e124-45f9-8f84-224ff2db3b89" />
+<img width="1004" height="162" alt="image" src="https://github.com/user-attachments/assets/608dffc9-8a8a-46d4-8e0b-e5cf9f61d360" />
 
 
 
