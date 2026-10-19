@@ -107,19 +107,51 @@ The key properties of a GBM model is:
 2) The mean of a GBM model is given by: E[ST] = S₀eμT.
 3) Due to the solution being closed-form, a price can be sampled in one step from S_0 to S_T. Time stepping schemes such as Euler-Maruyama are only needed for SDE's without a closed-form.
 
+
 <img width="476" height="515" alt="image" src="https://github.com/user-attachments/assets/253aea1b-5cf3-43d2-a4b0-eaa46af8f656" />
 
-5. Risk-neutral options pricing
+
+
+5. Risk-neutral option pricing
 The price of a derivative is not the discounted real-world expected payoff. The actual price is given by:
 <img width="157" height="33" alt="image" src="https://github.com/user-attachments/assets/8a24ffa6-772d-4536-9f95-ba87e4253c9d" />
+
+
 where under the risk neutral measure Q, the stock drifts at the risk free rate r rather than at μ.
 
+The reason for this is replication. As the portfolio of the stock and a riskless bond can be continuously rebalanced to reproduce the option's payoff in every scenario, so no-arbitrage will force the option to cost the same as the portfolio. The cost of the portfolio is independent of μ so simulating it under drift r and discounting at r is the shortcut that computes the replication cost. 
 <img width="811" height="215" alt="image" src="https://github.com/user-attachments/assets/77697adf-e27e-4073-8a7a-a15bbb3c7dff" />
 
 <img width="823" height="496" alt="image" src="https://github.com/user-attachments/assets/c05cac74-dd70-41c4-a351-5360e4a16696" />
 
 <img width="839" height="506" alt="image" src="https://github.com/user-attachments/assets/1d33ebe7-e124-45f9-8f84-224ff2db3b89" />
 <img width="1004" height="162" alt="image" src="https://github.com/user-attachments/assets/608dffc9-8a8a-46d4-8e0b-e5cf9f61d360" />
+
+6. Deriving the Black-Scholes formula
+For this derivation, we make the following assumptions: The GBM for the underlying has a constant σ, a constant risk-free rate r, no dividends, no transaction costs, continuous trading and no arbitrage.
+
+<img width="997" height="527" alt="image" src="https://github.com/user-attachments/assets/2c6a4980-80e8-4dd3-a6ec-de733dba0298" />
+<img width="826" height="512" alt="image" src="https://github.com/user-attachments/assets/88d2c256-b800-4d64-9108-120c03ff79cd" />
+<img width="953" height="442" alt="image" src="https://github.com/user-attachments/assets/0d869b7d-a097-45f6-92da-debcd43b129e" />
+<img width="596" height="491" alt="image" src="https://github.com/user-attachments/assets/b6e9d017-ab83-463c-92f4-982048df17d7" />
+
+
+7. Putting Black-Scholes into practice
+
+In practice the model is therefore used in two ways:
+- Forward : given an estimate of volatility, compute a theoretical fair value and compare it with the market price.
+- Inverse : find the sigma value that makes the model price equal the observed market price. The implied volatility is then a market-quoted measure of expected future volatility, and comparing it with the realised volatility is the basis of many volatility trades.
+
+<img width="917" height="332" alt="image" src="https://github.com/user-attachments/assets/396a1f92-737d-41fb-9297-9c409aa70013" />
+<img width="769" height="515" alt="image" src="https://github.com/user-attachments/assets/2cb8917d-0735-4897-b9be-510053b844a3" />
+
+This project does not implement volatility or the Greeks as it prices a single option under fixed inputs.
+
+
+
+
+
+
 
 
 
