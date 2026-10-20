@@ -69,16 +69,16 @@ band narrows as N grows, consistent with the 1/√N rate, and in panel 4 the ban
 ## Mathematical Background
 This section summarises the theory the project is built on.
 
-1. Random Walks
+### Random Walks
 
 A simple random walk is a sum of independent steps. Its variance grows linearly with the number of steps. As time is sped up by a factor of n, the walk rescales and converges to a continuous random process, Brownian motion. The scaling limit is why variance growing in proportion to time, and standard deviation growing like √T, is the foundational feature of everything to follow.
 <img width="928" height="323" alt="image" src="https://github.com/user-attachments/assets/976d3af0-24fb-4d38-a699-fcf30940e2c6" />
 
-2. Brownian Motion (the Wiener process)
+### Brownian Motion (the Wiener process)
 
 <img width="874" height="524" alt="image" src="https://github.com/user-attachments/assets/c1e417e0-a472-4912-a6ca-20dd0b48004c" />
 
-3. Arithmetic Brownian Motion (ABM)
+### Arithmetic Brownian Motion (ABM)
 
 <img width="539" height="474" alt="image" src="https://github.com/user-attachments/assets/76eadb60-82ca-4ade-988b-1b3d8060da47" />
 
@@ -88,7 +88,7 @@ The change in X is additive and normally distributed, so X can become negative, 
 
 <img width="487" height="190" alt="image" src="https://github.com/user-attachments/assets/5a4e4184-d718-425a-adf7-b5ca7e8387ec" />
 
-4. Geometric Brownian Motion (GBM)
+### Geometric Brownian Motion (GBM)
 
 GBM makes the percentage change in price random rather than the absolute change.
 <img width="1054" height="398" alt="image" src="https://github.com/user-attachments/assets/312757df-c2f2-42e3-bf0b-f3c235751b41" />
@@ -112,7 +112,7 @@ The key properties of a GBM model is:
 
 
 
-5. Risk-neutral option pricing
+### Risk-neutral option pricing
 The price of a derivative is not the discounted real-world expected payoff. The actual price is given by:
 <img width="157" height="33" alt="image" src="https://github.com/user-attachments/assets/8a24ffa6-772d-4536-9f95-ba87e4253c9d" />
 
@@ -127,7 +127,7 @@ The reason for this is replication. As the portfolio of the stock and a riskless
 <img width="839" height="506" alt="image" src="https://github.com/user-attachments/assets/1d33ebe7-e124-45f9-8f84-224ff2db3b89" />
 <img width="1004" height="162" alt="image" src="https://github.com/user-attachments/assets/608dffc9-8a8a-46d4-8e0b-e5cf9f61d360" />
 
-6. Deriving the Black-Scholes formula
+### Deriving the Black-Scholes formula
 For this derivation, we make the following assumptions: The GBM for the underlying has a constant σ, a constant risk-free rate r, no dividends, no transaction costs, continuous trading and no arbitrage.
 
 <img width="997" height="527" alt="image" src="https://github.com/user-attachments/assets/2c6a4980-80e8-4dd3-a6ec-de733dba0298" />
@@ -136,7 +136,8 @@ For this derivation, we make the following assumptions: The GBM for the underlyi
 <img width="596" height="491" alt="image" src="https://github.com/user-attachments/assets/b6e9d017-ab83-463c-92f4-982048df17d7" />
 
 
-7. Putting Black-Scholes into practice
+### Putting Black-Scholes into practice
+
 
 In practice the model is therefore used in two ways:
 - Forward : given an estimate of volatility, compute a theoretical fair value and compare it with the market price.
@@ -146,6 +147,50 @@ In practice the model is therefore used in two ways:
 <img width="769" height="515" alt="image" src="https://github.com/user-attachments/assets/2cb8917d-0735-4897-b9be-510053b844a3" />
 
 This project does not implement volatility or the Greeks as it prices a single option under fixed inputs.
+
+### Put-Call Parity
+
+<img width="1084" height="403" alt="image" src="https://github.com/user-attachments/assets/07a453f7-ca20-4301-ac77-4c5255cffedd" />
+
+The Put-Call parity is a risk-free identity. If it failed, buying the cheap side and selling the expensive side would guarantee a risk-free profit with zero net payoff at expiry, and trading would close the gap. 
+
+### The Central Limit Theorem 
+
+<img width="919" height="500" alt="image" src="https://github.com/user-attachments/assets/6cf78871-211d-48a3-8e0e-eecb6e81016c" />
+
+<img width="755" height="456" alt="image" src="https://github.com/user-attachments/assets/f27ab33d-eddd-47fb-ab83-ee263a5bd52d" />
+
+<img width="914" height="234" alt="image" src="https://github.com/user-attachments/assets/8cb92c36-aa06-47f0-858e-a4901c5626d6" />
+
+### Why Monte-Carlo Simulation works
+
+<img width="835" height="512" alt="image" src="https://github.com/user-attachments/assets/e6bc6bd7-7b6c-470b-8242-e2d40f9ff4c5" />
+
+<img width="926" height="512" alt="image" src="https://github.com/user-attachments/assets/08e296d4-745b-4e9d-b3d7-3bad36ca27c8" />
+
+<img width="962" height="404" alt="image" src="https://github.com/user-attachments/assets/c440bc81-a456-4043-b26d-0699f2418b71" />
+
+### Random number generation: inverse transform and NumPy
+
+<img width="660" height="487" alt="image" src="https://github.com/user-attachments/assets/494cc73d-4c19-4ed2-9d73-f40ecc5de4be" />
+
+In practice, the project uses NumPy's modern Generator API:
+rng = np.random.default_rng(seed=42)
+z = rng.standard_normal(size=n_sims)
+
+default_rng is recommended over the legacy interface, and a fixed seed makes draws reproducible, which was essential for debugging. NumPy's standard-normal uses a faster algorithm internally than literal inverse transform , but both produce the same distribution.
+
+### Variance reduction using Antithetic Variates
+
+<img width="917" height="509" alt="image" src="https://github.com/user-attachments/assets/6ac95e5e-5f0d-47ef-b22c-e50b548a2703" />
+
+<img width="586" height="511" alt="image" src="https://github.com/user-attachments/assets/3e53adac-b21d-4af6-bc7c-74bfc296c439" />
+
+<img width="779" height="232" alt="image" src="https://github.com/user-attachments/assets/9505b178-fa0f-491a-a025-8ddd3fdb9bdf" />
+
+The independent units are N/2 pair averages, so the standard error must be computed from those, not from all N payoffs treated as independent.
+
+## Implementation
 
 
 
