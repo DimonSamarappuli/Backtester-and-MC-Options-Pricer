@@ -210,9 +210,35 @@ When plotting full paths, the price is stepped over n_steps of length dt = T / n
 Histogram Simulation: 
 gbm_hist_simulation draws the prices used for the distribution plot and also returns the theoretical GBM mean, which allows the simulated sample to be compared directly with the exact value:
 
+def gbm_hist_simulation(S_0, mu, sigma, T, n_sims, seed=None):
+    rng = np.random.default_rng(seed=seed)
+    z = rng.standard_normal(size=n_sims)
+    drift_term = T * (mu - (1 / 2) * sigma ** 2)   # From the GBM equation
+    shock_term = sigma * np.sqrt(T) * z            # sigma * W_T, with W_T = sqrt(T) * Z
+    S_T = S_0 * np.exp(drift_term + shock_term)
+    theoretical_mean = S_0 * np.exp(mu * T) # Mean of GBM      # E[S_T] for GBM
+    return S_T, theoretical_mean
+
+    
+Plotting S_T with plt.hist shows the lognormal disctribution and S_T.mean() can be checked against the theoretical_mean, which strongly agree up to sampling noise.
+
+## Design choices made and pitfalls found:
+
+- Use np.maximum which works element-wise rather than np.max which collapses to a single value
+- np.append returns a new array rather than modifying in place an already existing array, so use the standard .append() list function instead.
+- The standard error at each checkpoint must divide by √n for that checkpoint rather than by √N of the full run.
+- plt.plot(t, paths.T): Matplotlib draws one line per column, so a row-per-path array gets transposed.
+- Price paths and the convergence plot have different axes (time vs. number of simulations, stock price vs. option price), so they belong on different subplots, rather than on the sane axes.
+- Simulation counts use np.logspace (equal ratios) for the convergence checkpoints, and time uses np.linspace.
 
 
-
+## Validation
+The pricer was checked against independent references, not just against itself:
+1. Hand Computation: Black-Scholes values worked out manually from a standard normal table. For S = 100, K = 100, r = 0.05, σ = 0.20, T = 1: call ≈ 10.45 and put ≈ 5.57.
+2. Closed-form agreement: The Monte-Carlo price should fall inside its own 95% confidence interval of the coded Black-Scholes price, and the interval should shrink as 1/√N.
+3. Put call parity: The put from parity , C − S + Ke^(−rT), matches the put from the direct formula.
+4. Distribution check: A histogram of the simulated terminal prices  is right-skewed and strictly positive, and it's sample mean is close to the theoretical GBM mean.
+5. Variance Reduction: The antithetic standard error is smaller than the plain one at equal cost
 
 
 
