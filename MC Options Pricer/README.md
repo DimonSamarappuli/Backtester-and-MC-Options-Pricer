@@ -192,6 +192,24 @@ The independent units are N/2 pair averages, so the standard error must be compu
 
 ## Implementation
 
+Simulation: The terminal price is generated with the closed-form solution, using the risk-neutral drift r:
+
+z = rng.standard_normal(n_sims)
+S_T = S0 * np.exp((r - 0.5 * sigma**2) * T + sigma * np.sqrt(T) * z)
+
+Payoff and discounting: The below code is for a call. For a put, use np.maximum(K - S_T, 0).
+
+payoffs = np.maximum(S_T - K, 0) 
+discounted = np.exp(-r * T) * payoffs
+price = discounted.mean()
+std_error = discounted.std(ddof=1) / np.sqrt(n_sims)
+
+Path Simulation: 
+When plotting full paths, the price is stepped over n_steps of length dt = T / n_steps. Each step multiplies the price by exp[(r − σ²/2)dt + σ√dt · Z], and uses np.cumsum along each row to accumulate the log increments. This is possible because log multiplication is additive of the argument.
+
+Histogram Simulation: 
+gbm_hist_simulation draws the prices used for the distribution plot and also returns the theoretical GBM mean, which allows the simulated sample to be compared directly with the exact value:
+
 
 
 
