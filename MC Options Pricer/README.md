@@ -7,11 +7,13 @@ This pricer was built bottom up, which includes learning the stochastic processe
 ## Contents
 - Features
 - Results
-- Mathematical Foundations
-- Implementation Theory
+- Mathematical Background
+- Implementation
+- Design choices made and pitfalls encountered
 - Validation
-- Limitations
-- Learning log and references
+- Limitations and possible extensions
+- Learning log and References
+- Author
 
 ## Features
 **GBM price simulator** : draws N prices in a single vectorised expression from a normal distribution, using NumPy, using the exact closed form GBM Solution
