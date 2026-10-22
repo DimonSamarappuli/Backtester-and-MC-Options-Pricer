@@ -195,6 +195,7 @@ The independent units are N/2 pair averages, so the standard error must be compu
 Simulation: The terminal price is generated with the closed-form solution, using the risk-neutral drift r:
 
 z = rng.standard_normal(n_sims)
+
 S_T = S0 * np.exp((r - 0.5 * sigma**2) * T + sigma * np.sqrt(T) * z)
 
 Payoff and discounting: The below code is for a call. For a put, use np.maximum(K - S_T, 0).
@@ -222,25 +223,54 @@ def gbm_hist_simulation(S_0, mu, sigma, T, n_sims, seed=None):
     
 Plotting S_T with plt.hist shows the lognormal disctribution and S_T.mean() can be checked against the theoretical_mean, which strongly agree up to sampling noise.
 
-## Design choices made and pitfalls found:
+## Design choices made and pitfalls encountered:
 
 - Use np.maximum which works element-wise rather than np.max which collapses to a single value
 - np.append returns a new array rather than modifying in place an already existing array, so use the standard .append() list function instead.
 - The standard error at each checkpoint must divide by √n for that checkpoint rather than by √N of the full run.
-- plt.plot(t, paths.T): Matplotlib draws one line per column, so a row-per-path array gets transposed.
-- Price paths and the convergence plot have different axes (time vs. number of simulations, stock price vs. option price), so they belong on different subplots, rather than on the sane axes.
+- Price paths and the convergence plot have different axes (time vs. number of simulations, stock price vs. option price), so they belong on different subplots, rather than on the same axes.
 - Simulation counts use np.logspace (equal ratios) for the convergence checkpoints, and time uses np.linspace.
 
 
 ## Validation
 The pricer was checked against independent references, not just against itself:
-1. Hand Computation: Black-Scholes values worked out manually from a standard normal table. For S = 100, K = 100, r = 0.05, σ = 0.20, T = 1: call ≈ 10.45 and put ≈ 5.57.
+1. Hand Computation: Black-Scholes values worked out manually. For S = 100, K = 100, r = 0.05, σ = 0.20, T = 1: call ≈ 10.45 and put ≈ 5.57.
 2. Closed-form agreement: The Monte-Carlo price should fall inside its own 95% confidence interval of the coded Black-Scholes price, and the interval should shrink as 1/√N.
 3. Put call parity: The put from parity , C − S + Ke^(−rT), matches the put from the direct formula.
-4. Distribution check: A histogram of the simulated terminal prices  is right-skewed and strictly positive, and it's sample mean is close to the theoretical GBM mean.
+4. Distribution check: A histogram of the simulated terminal prices is right-skewed and strictly positive, and it's sample mean is close to the theoretical GBM mean.
 5. Variance Reduction: The antithetic standard error is smaller than the plain one at equal cost
 
+## Limitations and possible extensions
+### Limitations :
+- Constant volatility
+- Constant interest rate
+- No dividends
+- European exercise only
+- No transaction costs
+- Lognormal returns
 
+### Possible Extensions
+- Path-dependent options : using Asian/barrier options from the path simulator already in the project
+- Greeks : by finite differences or path wise estimators
+- Implied volatility : by root-finding on the BS price
+- Dividends : via a continuous dividend yield
 
+## Learning Log and References
+<img width="509" height="289" alt="image" src="https://github.com/user-attachments/assets/e7baaf4a-5fd3-422b-a96c-2589bb614197" />
 
+Process notes: 
+- NumPy was learned in a short targeted pass right before it was needed, restricted to the parts the project uses: 1D arrays, vectorised arithmetic, np.exp, np.maximum, default_rng, and basic statistics. Matrices and Linear Algebra with NumPy was not covered, as it was not required.
+Matplotlib was learned at the point of use for the histogram, convergence plot and path plot.
 
+Links: 
+• Quant Guild library (lectures and notebooks):
+
+https://github.com/romanmichaelpaolucci/Quant-Guild-Library
+
+• NumPy quickstart: https://numpy.org/doc/stable/user/quickstart.html
+
+• Université Paris 1 Monte Carlo lab sheet:
+https://cours.univ-paris1.fr/pluginfile.php/1915082/mod_resource/content/1/MonteCarlo.pdf
+
+## Author
+Dimon T B Samrappuli.
