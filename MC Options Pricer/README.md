@@ -110,6 +110,7 @@ The key properties of a GBM model is:
 3) Due to the solution being closed-form, a price can be sampled in one step from S_0 to S_T. Time stepping schemes such as Euler-Maruyama are only needed for SDE's without a closed-form.
 
 
+
 <img width="476" height="515" alt="image" src="https://github.com/user-attachments/assets/253aea1b-5cf3-43d2-a4b0-eaa46af8f656" />
 
 
@@ -275,4 +276,4 @@ https://github.com/romanmichaelpaolucci/Quant-Guild-Library
 https://cours.univ-paris1.fr/pluginfile.php/1915082/mod_resource/content/1/MonteCarlo.pdf
 
 ## Author
-Dimon T B Samrappuli.
+Dimon T B Samrappuli - https://github.com/DimonSamarappuli
