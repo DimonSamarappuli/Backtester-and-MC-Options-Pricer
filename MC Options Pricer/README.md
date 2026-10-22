@@ -139,7 +139,7 @@ For this derivation, we make the following assumptions: The GBM for the underlyi
 ### Putting Black-Scholes into practice
 
 
-In practice the model is therefore used in two ways:
+In practice the model is used in two ways:
 - Forward : given an estimate of volatility, compute a theoretical fair value and compare it with the market price.
 - Inverse : find the sigma value that makes the model price equal the observed market price. The implied volatility is then a market-quoted measure of expected future volatility, and comparing it with the realised volatility is the basis of many volatility trades.
 
